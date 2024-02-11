@@ -52,30 +52,40 @@ const AdminPanel = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (errors.tittle.length > 0 && errors.info.length > 0 && errors.price.length > 0) {
-      alert('Something went wrong');
+  
+    // Check if any of the input fields is empty
+    if (todo.tittle.trim() === '' || todo.info.trim() === '' || todo.price.trim() === '') {
+      alert('Please fill in all the fields');
+      return; // exit the function if any field is empty
+    }
+  
+    // Check for validation errors
+    if (errors.tittle.length > 0 || errors.info.length > 0 || errors.price.length > 0) {
+      alert('Please fix the validation errors');
     } else {
+      // Add the product to the list
       setList([
         ...list,
         {
           ...todo,
-          foto: selectedFile, // Fotoğrafı buradan alın
+          foto: selectedFile,
           id: uniqid(),
         },
       ]);
-
+  
+      // Reset the todo state and clear file input
       setTodo({
-        tittle: "",
+        tittle: '',
         info: '',
         price: '',
         foto: null,
         completed: false,
       });
-
-      fileInputRef.current.value = "";
+  
+      fileInputRef.current.value = '';
     }
   };
+  
 
   return (
     <section className="section">

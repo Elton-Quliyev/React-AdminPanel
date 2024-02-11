@@ -11,7 +11,7 @@ const AdminPanel = () => {
     tittle: '',
     info: '',
     price: '',
-    foto: null, // Fotoğrafı burada saklayın
+    foto: null,
     completed: false,
     id: 0
   });
@@ -52,18 +52,15 @@ const AdminPanel = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Check if any of the input fields is empty
-    if (todo.tittle.trim() === '' || todo.info.trim() === '' || todo.price.trim() === '') {
-      alert('Please fill in all the fields');
-      return; // exit the function if any field is empty
+
+    if (todo.tittle.trim() === '' || todo.info.trim() === '' || todo.price.trim() === '' || !todo.foto) {
+      alert('Please fill in all the fields and select a file');
+      return;
     }
-  
-    // Check for validation errors
+
     if (errors.tittle.length > 0 || errors.info.length > 0 || errors.price.length > 0) {
       alert('Please fix the validation errors');
     } else {
-      // Add the product to the list
       setList([
         ...list,
         {
@@ -72,20 +69,23 @@ const AdminPanel = () => {
           id: uniqid(),
         },
       ]);
-  
-      // Reset the todo state and clear file input
+
       setTodo({
-        tittle: '',
+        tittle: "",
         info: '',
         price: '',
         foto: null,
         completed: false,
       });
-  
-      fileInputRef.current.value = '';
+
+      fileInputRef.current.value = "";
     }
   };
-  
+
+  const handleDelete = (id) => {
+    const updatedList = list.filter((item) => item.id !== id);
+    setList(updatedList);
+  };
 
   return (
     <section className="section">
@@ -137,8 +137,11 @@ const AdminPanel = () => {
       <div className="products">
         {list.map((item) => (
           <div className="product" key={item.id}>
+            <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+              X
+            </button>
             <img
-              src={item.foto} // Her ürünün kendi fotoğrafını kullanın
+              src={item.foto}
               alt="Selected file preview"
             />
             <p>Mehsulun adi : {item.tittle} </p>

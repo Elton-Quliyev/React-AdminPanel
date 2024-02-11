@@ -68,3 +68,19 @@ input{
 p{
     font-size: 20px;
 }
+
+
+.delete-btn{
+
+    background-color: #e3e1e1;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 15px;
+    font-weight: 800;
+    position: relative;
+    left: 263px;
+    bottom: 15px;
+
+}
